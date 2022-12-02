@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 const { verifyWebhookSignature } = require('@graphcms/utils');
-const SECRET = 'kUtF2Ap426acBODZ6LyJ6cvrwzuVMCrL';
+const secret = 'kUtF2Ap426acBODZ6LyJ6cvrwzuVMCrL';
 
 app.use(bodyParser.json())
 
@@ -15,7 +15,7 @@ app.get('/', (req, res) => {
 app.post('/', (req, res) => {
     console.log('HEADRS', req.headers)
     console.log('SIGN', req.headers['gcms-signature'])
-    const isValid = verifyWebhookSignature({ body: req.body, signature: req.headers['gcms-signature'], SECRET });
+    const isValid = verifyWebhookSignature({ body: req.body, signature: req.headers['gcms-signature'], secret });
     console.log(isValid)
     console.log(JSON.stringify(req.body), 'POST')
     return res.sendStatus(200)
